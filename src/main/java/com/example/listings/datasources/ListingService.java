@@ -4,6 +4,7 @@ import com.example.listings.generated.types.CreateListingInput;
 import com.example.listings.models.AmenityList;
 import com.example.listings.models.ListingModel;
 import com.fasterxml.jackson.core.type.TypeReference;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
@@ -25,7 +26,7 @@ public class ListingService {
 
     private final ObjectMapper mapper = new ObjectMapper();
 
-    @Cacheable(value="listings")
+    @CacheEvict(value="listings", allEntries = true)
     public List<ListingModel> featuredListingsRequest() throws IOException {
         System.out.println("Calling for featured listings");
         JsonNode response = client
@@ -41,6 +42,7 @@ public class ListingService {
         return null;
     }
 
+    @Cacheable(value="listings", unless = "#result == null")
     public ListingModel listingRequest(String id) {
         return client
                 .get()
@@ -94,9 +96,4 @@ public class ListingService {
                 .retrieve()
                 .body(ListingModel.class);
     }
-
-
-
-
-
 }
