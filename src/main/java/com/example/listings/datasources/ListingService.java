@@ -1,11 +1,9 @@
 package com.example.listings.datasources;
 
 import com.example.listings.generated.types.CreateListingInput;
-import com.example.listings.models.AmenityList;
 import com.example.listings.models.ListingModel;
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
